@@ -1,7 +1,11 @@
 body {
-    background-color: #F4EEE0;
+    background-color: #FFFBE9;
 }
 
 .col-2 img {
     height: 150px;
+}
+
+#details {
+    opacity: 0;
 }
