@@ -1,10 +1,33 @@
 document.querySelector("#btnSearch").addEventListener("click", () => {
-
     let text = document.querySelector("#txtSearch").value;
     document.querySelector("#details").style.opacity = 0;
     getCountry(text);
-    
-}) 
+})
+
+document.querySelector("#btnLocation").addEventListener("click", () => {
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }
+})
+
+function onError(err) {
+    console.log(err);
+}
+
+async function onSuccess(position) {
+    let lat = position.coords.latitude;
+    let lng = position.coords.longitude;
+
+    const apiKey = "4a88e241eaab4d2382983fd5db83018a";
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+    const country = data.results[0].components.country;
+
+    document.querySelector("#txtSearch").value = country;
+    document.querySelector("#btnSearch").click();
+}
 
 async function getCountry(country) {
 
