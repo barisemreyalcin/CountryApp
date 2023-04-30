@@ -9,3 +9,7 @@ body {
 #details {
     opacity: 0;
 }
+
+#loadingIcon {
+    display: none;
+}

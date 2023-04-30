@@ -1,17 +1,20 @@
 document.querySelector("#btnSearch").addEventListener("click", () => {
     let text = document.querySelector("#txtSearch").value;
     document.querySelector("#details").style.opacity = 0;
+    document.querySelector("#loadingIcon").style.display = "block";
     getCountry(text);
 })
 
 document.querySelector("#btnLocation").addEventListener("click", () => {
     if(navigator.geolocation) {
+        document.querySelector("#loadingIcon").style.display = "block";
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
     }
 })
 
 function onError(err) {
     console.log(err);
+    document.querySelector("#loadingIcon").style.display = "none";
 }
 
 async function onSuccess(position) {
@@ -52,33 +55,11 @@ async function getCountry(country) {
     catch(err) {
         renderError(err);
     }
-    //     .then((response) => {
-    //         if(!response.ok) {
-    //             throw new Error("Country cannot be found. Please enter a valid text.");
-    //         }
-    //         return response.json();
-    //     })
-    //     .then((data) => {
-    //         
-    //         
-
-    //         if(!countries) {
-    //             throw new Error("Neighbors do not exist for this country.");
-    //         }
-
-    //         return 
-    //     })
-    //     .then(response => {
-    //         return response.json();
-    //     })
-    //     .then((data) => {
-    //         
-    //     })
-    //     .catch(err => renderError(err));
 }
 
 function renderCountry(data) {
 
+    document.querySelector("#loadingIcon").style.display = "none";
     document.querySelector("#country-details").innerHTML = "";
     document.querySelector("#neighbors").innerHTML = "";
 
@@ -129,6 +110,7 @@ function renderNeighbors(data) {
 }
 
 function renderError(err) {
+    document.querySelector("#loadingIcon").style.display = "none";
     const html = `
         <div class="alert alert-danger">
             ${err.message}
